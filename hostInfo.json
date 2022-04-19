@@ -1,4 +1,5 @@
 {
     "ip": "114.132.252.201",
-    "hostname": "VM-8-13-centos"
+    "hostname": "VM-8-13-centos",
+    "action": "restart"
 }
