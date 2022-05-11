@@ -1,31 +1,44 @@
-// 导入express模块
-const express = require('express');
-// 创建应用
-const app = express();
+const Koa = require('koa')
+const app = new Koa()
+const views = require('koa-views')
+const json = require('koa-json')
+const onerror = require('koa-onerror')
+const bodyparser = require('koa-bodyparser')
+const logger = require('koa-logger')
 
-// # 解决跨域问题
-app.all('*', function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Methods', '*');
-    res.header('Content-Type', 'application/json;charset=utf-8');
-    next();
+const index = require('./routes/index')
+const users = require('./routes/users')
+
+// error handler
+onerror(app)
+
+// middlewares
+app.use(bodyparser({
+  enableTypes:['json', 'form', 'text']
+}))
+app.use(json())
+app.use(logger())
+app.use(require('koa-static')(__dirname + '/public'))
+
+app.use(views(__dirname + '/views', {
+  extension: 'pug'
+}))
+
+// logger
+app.use(async (ctx, next) => {
+  const start = new Date()
+  await next()
+  const ms = new Date() - start
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+})
+
+// routes
+app.use(index.routes(), index.allowedMethods())
+app.use(users.routes(), users.allowedMethods())
+
+// error-handling
+app.on('error', (err, ctx) => {
+  console.error('server error', err, ctx)
 });
 
-// 设置路由
-app.post('/vm/restart', (req, resp) => {
-    // 输出响应
-    // resp.json(req.headers);
-    //执行重启
-    var spawn = require('child_process').spawn;
-    free = spawn('reboot');
-
-    const hostinfo = require('./hostInfo.json')
-    console.log(hostinfo)
-    resp.json(hostinfo)
-});
-// 开启监听
-app.listen(8080, () => {
-    console.log('listen on 8080');
-});
-
+module.exports = app
