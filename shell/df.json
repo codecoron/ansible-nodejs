@@ -1,0 +1,17 @@
+[
+{"Filesystem":"devtmpfs","Size":"447M","Used":"0","Avail":"447M","UsedPer":"0%","Mounted":"/dev"}
+,
+{"Filesystem":"tmpfs","Size":"487M","Used":"4.0K","Avail":"487M","UsedPer":"1%","Mounted":"/dev/shm"}
+,
+{"Filesystem":"tmpfs","Size":"487M","Used":"15M","Avail":"472M","UsedPer":"4%","Mounted":"/run"}
+,
+{"Filesystem":"tmpfs","Size":"487M","Used":"0","Avail":"487M","UsedPer":"0%","Mounted":"/sys/fs/cgroup"}
+,
+{"Filesystem":"/dev/sda3","Size":"18G","Used":"6.0G","Avail":"12G","UsedPer":"34%","Mounted":"/"}
+,
+{"Filesystem":"/dev/sda1","Size":"297M","Used":"152M","Avail":"146M","UsedPer":"52%","Mounted":"/boot"}
+,
+{"Filesystem":"tmpfs","Size":"98M","Used":"24K","Avail":"98M","UsedPer":"1%","Mounted":"/run/user/1000"}
+,
+{"Filesystem":"tmpfs","Size":"98M","Used":"0","Avail":"98M","UsedPer":"0%","Mounted":"/run/user/0"}
+]
