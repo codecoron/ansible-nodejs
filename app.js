@@ -8,13 +8,14 @@ const logger = require('koa-logger')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
-
+const status = require('./routes/status')
+const init = require("./service/init")
 // error handler
 onerror(app)
 
 // middlewares
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())
@@ -35,6 +36,14 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(status.routes(), status.allowedMethods())
+
+//解决cros跨域
+app.use(require("./plugins/cros"));
+
+// 后台执行shell脚本
+app.use(init)
+// init()
 
 // error-handling
 app.on('error', (err, ctx) => {
